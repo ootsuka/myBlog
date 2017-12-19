@@ -1,16 +1,13 @@
 const express = require('express')
 const router = express.Router()
 
-const checkNotLogin = require('../middlewares/check').checkNotLogin
+const checkLogin = require('../middlewares/check').checkLogin
 
-// GET /signin 登录页
-router.get('/', checkNotLogin, function (req, res, next) {
-  res.send('登录页')
-})
-
-// POST /signin 用户登录
-router.post('/', checkNotLogin, function (req, res, next) {
-  res.send('登录')
+// GET /signout 登出
+router.get('/', checkLogin, function (req, res, next) {
+  req.session.user = null;
+  req.flash('success', '登出成功')
+  res.redirect('/posts')
 })
 
 module.exports = router
